@@ -1,0 +1,8 @@
+{
+  "pages": {
+    "home": {
+      "title": "Ana Sayfa",
+      "welcome": "Merhaba {{name}}!"
+    }
+  }
+}
