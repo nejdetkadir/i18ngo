@@ -11,7 +11,7 @@ I18nGo is a simple internationalization library for Golang that enables translat
 ## Features
 - Multiple Locales: Load and manage multiple locales for translations.
 - Change Locales Dynamically: Easily switch between different languages.
-- Translation with Scoped Paths: Fetch translations using dot-separated paths.
+- Translation with Scoped Paths: Fetch translations using dot-separated (or custom) paths.
 - Dynamic Value Replacement: Replace placeholders in translations dynamically with provided values.
 - Debugging: Enable debugging to log details about missing translations and locale management.
 - Customizable Separator: Use a custom separator for translation paths.
@@ -54,7 +54,7 @@ func main() {
 
     i18n, err := i18ngo.New(i18ngo.Options{
         DefaultLocale: "en",
-        Debug:         true,
+        Debug:         true, // Enable debugging (default: false)
         Locales: []i18ngo.LocaleOptions{
             {Locale: "en", File: enData},
             {Locale: "tr", File: trData},
@@ -116,6 +116,23 @@ Use a scope to define a context for your translation paths.
 params := map[string]interface{}{"scope": "common.greetings"}
 translated := i18n.T("hello", &params)
 println(translated) // Output: Hello
+```
+
+### Custom Separator
+You can use a custom separator for translation paths. **You don't need to change the JSON files; just update the separator in the options.**
+
+```go
+i18n, _ := i18ngo.New(i18ngo.Options{
+    DefaultLocale: "en",
+    Separator:     "/", // Use a custom separator (default: ".")
+    Locales: []i18ngo.LocaleOptions{
+        {Locale: "en", File: enData},
+        {Locale: "tr", File: trData},
+    },
+})
+
+translated := i18n.T("pages/login/buttons/login")
+println(translated) // Output: Login
 ```
 
 ## Example
