@@ -45,6 +45,22 @@ func New(options Options) (I18nGo, error) {
 	var currentLocale Locale
 	var availableLocales []string
 
+	if len(options.Locales) == 0 {
+		if options.Debug {
+			log.Println("[DEBUG] [New] no locales defined")
+		}
+
+		return nil, errors.New("no locales defined")
+	}
+
+	if options.DefaultLocale == "" {
+		if options.Debug {
+			log.Println("[DEBUG] [New] default locale is not defined")
+		}
+
+		return nil, errors.New("default locale is not defined")
+	}
+
 	for _, locale := range options.Locales {
 		var localeData map[string]interface{}
 		if err := json.Unmarshal(locale.File, &localeData); err != nil {
